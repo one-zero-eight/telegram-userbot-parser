@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "telegram-userbot-parser"
+version = "0.1.0"
+description = ""
+authors = ["Eldar Mametov <e.mametov@innopolis.university>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Pyrogram = "^2.0.106"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
