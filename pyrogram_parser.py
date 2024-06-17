@@ -19,7 +19,8 @@ class StructureMessage(BaseModel):
     sender_chat: Chat
     date: datetime
     chat: Chat
-    text: str
+    text: str = None
+    caption: str = None
 
     def serializableDict(self):
         """Converts an object into a dictionary with date conversion to an ISO format string"""
@@ -29,23 +30,7 @@ class StructureMessage(BaseModel):
 
 def saveJson(message):
     """Saves the message to a JSON file"""
-    message_save = StructureMessage(
-        id=message.id,
-        sender_chat=Chat(
-            id=message.sender_chat.id,
-            type=str(message.chat.type),
-            title=message.sender_chat.title,
-            username=message.sender_chat.username,
-        ),
-        date = message.date,
-        chat = Chat(
-            id=message.chat.id,
-            type=str(message.chat.type),
-            title=message.chat.title,
-            username=message.chat.username,
-        ),
-        text = message.caption if message.caption else message.text
-    )
+    message_save = StructureMessage.model_validate_json(message)
 
     # Opening a file and writing data
     with open(filename, 'r+', encoding='utf-8') as file:
@@ -62,8 +47,8 @@ def saveJson(message):
 async def new_message_handler(client, message):
     """Processes new messages and saves them if there is a text or signature"""
     if message.text or message.caption:
+        message = str(message)
         saveJson(message)
-        print(message)
 
 if __name__ == "__main__":
     app.run()
