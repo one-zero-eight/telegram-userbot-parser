@@ -19,3 +19,4 @@ public.pem
 # Secrets & Output
 *.session
 parser.json
+test_site.py
