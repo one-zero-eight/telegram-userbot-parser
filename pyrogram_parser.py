@@ -5,13 +5,19 @@ from datetime import datetime
 import httpx
 import os
 import asyncio
+from dotenv import load_dotenv
+
+# Loading parameters from .env
+load_dotenv()
 
 # File for saving data
 filename = "parser.json"
 # specify the name of the session file for userbot
-app = Client("my_account")
+app = Client(f"{os.getenv("PYROGRAM_SESSION_STRING")}")
 # The url of the server
-url = "http://127.0.0.1:5000/api/messages"
+url = os.getenv("URL")
+
+print(url)
 
 
 class Chat(BaseModel):
@@ -26,8 +32,8 @@ class StructureMessage(BaseModel):
     sender_chat: Chat
     date: datetime
     chat: Chat
-    text: str = None
-    caption: str = None
+    text: str | None
+    caption: str | None
 
     def serializableDict(self):
         """Converts an object into a dictionary with date conversion to an ISO format string"""
@@ -71,7 +77,7 @@ async def resend_all_message():
                     print(
                         f"Status code: {response.status_code}, message id: {history_message['id']}"
                     )
-                    if response.status_code != 200:
+                    if response.status_code not in [200, 201]:
                         return
             file.seek(0)
             json.dump([], file, ensure_ascii=False, indent=4)
@@ -84,7 +90,7 @@ async def send_to_server(message_save):
         try:
             response = await client.post(url, json=message_save.serializableDict())
             print(f"Status code: {response.status_code}, message id: {message_save.id}")
-            if response.status_code == 200:
+            if response.status_code in [200, 201]:
                 await resend_all_message()
             else:
                 await saveJson(message_save)
@@ -99,8 +105,7 @@ async def send_to_server(message_save):
 async def new_message_handler(client, message):
     """Processes new messages and saves them if there is a text or signature"""
     if message.text or message.caption:
-        message = str(message)
-        message_save = StructureMessage.model_validate_json(message)
+        message_save = StructureMessage.model_validate(message, from_attributes=True)
         await send_to_server(message_save)
         # saveJson(message)
 
