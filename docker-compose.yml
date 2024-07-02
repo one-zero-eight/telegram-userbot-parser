@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  parser:
+    build: .
+    volumes:
+      - .env:/app/.env # Attach the .env file to the container
+    networks:
+      - default # Connect the service to the default network
+
+networks:
+  default:
+    driver: bridge

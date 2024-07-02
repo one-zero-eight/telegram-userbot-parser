@@ -20,7 +20,3 @@ public.pem
 *.session
 parser.json
 test_site.py
-
-### Docker ###
-Dockerfile
-docker-compose.yml

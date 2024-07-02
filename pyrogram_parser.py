@@ -13,11 +13,9 @@ load_dotenv()
 # File for saving data
 filename = "parser.json"
 # specify the name of the session file for userbot
-app = Client(f"{os.getenv("PYROGRAM_SESSION_STRING")}")
+app = Client(os.getenv("PYROGRAM_SESSION_STRING"))
 # The url of the server
 url = os.getenv("URL")
-
-print(url)
 
 
 class Chat(BaseModel):
@@ -54,6 +52,7 @@ async def saveJson(message_save):
                 data = json.load(file)
             except json.JSONDecodeError:
                 data = []
+            print(f"save message: id = {message_save.id}")
             data.append(message_save.serializableDict())
             file.seek(0)
             json.dump(data, file, ensure_ascii=False, indent=4)
