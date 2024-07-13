@@ -106,7 +106,17 @@ async def new_message_handler(client, message):
     if message.text or message.caption:
         message_save = StructureMessage.model_validate(message, from_attributes=True)
         await send_to_server(message_save)
-        # saveJson(message)
+
+
+# Handler for edited messages in the specified chats
+@app.on_edited_message(
+    filters.chat(["@sportinIU", "@opportunitiesforyou", "@test_kanal_capstone"])
+)
+async def edited_message_handler(client, message):
+    """the process for the message that was changed"""
+    if message.text or message.caption:
+        message_save = StructureMessage.model_validate(message, from_attributes=True)
+        await send_to_server(message_save)
 
 
 if __name__ == "__main__":

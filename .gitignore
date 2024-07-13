@@ -20,3 +20,4 @@ public.pem
 *.session
 parser.json
 test_site.py
+my_account.session-journal
