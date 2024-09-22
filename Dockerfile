@@ -18,7 +18,7 @@ RUN chmod 777 /app
 WORKDIR /app
 
 #we install the dependencies specified in py project.tom l, excluding dev dependencies.
-RUN poetry install --no-dev
+RUN poetry install
 
 COPY . /app
 

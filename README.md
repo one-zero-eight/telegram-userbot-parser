@@ -5,7 +5,7 @@ This Python script uses a Pyrogram to analyze messages from Telegram channels an
 
 ## Installation
 ### Requirements
-- Python 3.11+
+- Python 3.12
 - Poetry
 
 ### Installation Steps
@@ -15,7 +15,7 @@ This Python script uses a Pyrogram to analyze messages from Telegram channels an
    cd telegram-userbot-parser
 2. Install dependencies using Poetry:
     ```terminal
-    poetry install --no-root --with code-style
+    poetry install --with code-style
 3. Getting the API for the user bot:
     - go to the website https://core.telegram.org/api/obtaining_api_id and use the account to get the API. Be sure to write down the api_id and api_hash that you will receive on the site.
     - Create a Python file and use this code to get your session file to use user bot. write down your data in api_id and api_hash. Run this file and go through all the necessary steps. You can read more here https://docs.pyrogram.org/intro/quickstart
@@ -46,7 +46,7 @@ This Python script uses a Pyrogram to analyze messages from Telegram channels an
  - Retries sending messages stored in a JSON file upon server error.
 
 ### Technologies Used
- - Python 3.11+
+ - Python 3.12
  - Pyrogram
  - FastAPI
  - httpx
